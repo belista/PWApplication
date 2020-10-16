@@ -1,0 +1,17 @@
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30%;
+    height: 30%;
+}
+
+.full-width-input {
+    width: 100%;
+}
+
+.form{
+    padding-top: 10px;
+}
+

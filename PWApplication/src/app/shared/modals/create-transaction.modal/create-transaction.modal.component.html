@@ -1,0 +1,30 @@
+<h1 mat-dialog-title>Create Transaction</h1>
+<div mat-dialog-content>
+  <form class="form form-container" [formGroup]="formTransactionData">
+
+    <mat-form-field class="full-width-input">
+      <mat-label>Base transaction</mat-label>
+      <mat-select formControlName="transaction" (ngModelChange)="transactionChanged($event)">
+        <mat-option *ngFor="let transaction of transactions" [value]="transaction.id">
+          {{transaction.username}}: {{transaction.amount}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>User</mat-label>
+        <mat-select formControlName="name">
+          <mat-option *ngFor="let user of users" [value]="user.name">
+            {{user.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Amount</mat-label>
+        <input type="email" matInput placeholder="Enter amount" formControlName="amount">
+      </mat-form-field>
+
+    <button mat-stroked-button color="primary" (click)="createTransaction()" [disabled]="formTransactionData.invalid">Create transaction</button>
+  </form>
+</div>
