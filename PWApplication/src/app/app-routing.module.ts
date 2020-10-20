@@ -5,10 +5,10 @@ import { MainComponent } from './main/main.component';
 import { AuthGuard } from '../app/shared/guards/auth.guard';
 
 const routes: Routes = [
-  { path: "", component: MainComponent, canActivate: [AuthGuard]},
-  { path: "main", component: MainComponent, canActivate: [AuthGuard]},
+  { path: "", canActivate: [AuthGuard], loadChildren: () => import("./main/main.module").then(m => m.MainModule)},
+  { path: "main", canActivate: [AuthGuard], loadChildren: () => import("./main/main.module").then(m => m.MainModule)},
   { path: "login", component: LoginComponent},
-  { path: "**", component: MainComponent, canActivate: [AuthGuard]}
+  { path: "**", canActivate: [AuthGuard], loadChildren: () => import("./main/main.module").then(m => m.MainModule)}
 ];
 
 @NgModule({

@@ -51,17 +51,15 @@ import {OverlayModule} from '@angular/cdk/overlay';
 import { CrudService } from '../app/shared/services/crud.service'
 import { LocalStorageService } from '../app/shared/services/storage.service'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { MainComponent } from './main/main.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { CreateTransactionModalComponent } from './shared/modals/create-transaction.modal/create-transaction.modal.component';
+import { MainModule } from './main/main.module';
+import { RequestInterceptor } from './shared/interceptors/request.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    MainComponent,
-    CreateTransactionModalComponent
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -113,9 +111,18 @@ import { CreateTransactionModalComponent } from './shared/modals/create-transact
     ScrollingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MainModule
   ],
-  providers: [CrudService, LocalStorageService, AuthGuard],
+  providers: [
+    CrudService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    }, 
+    LocalStorageService,
+     AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

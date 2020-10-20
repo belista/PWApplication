@@ -1,8 +1,11 @@
 import {Injectable} from '@angular/core';
+import { AppModule } from 'src/app/app.module';
 import { Transaction } from '../models/transaction.model';
 import { User } from '../models/user.model';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class LocalStorageService {
     public getToken() {
         return localStorage.getItem("token");

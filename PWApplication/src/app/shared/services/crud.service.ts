@@ -6,8 +6,11 @@ import {environment} from '../../../environments/environment';
 import {Observable} from 'rxjs';
 import { LocalStorageService } from './storage.service';
 import { Router } from '@angular/router';
+import { AppModule } from 'src/app/app.module';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CrudService {
     constructor(private http: HttpClient, private store: LocalStorageService, private router: Router) {}
 
@@ -17,19 +20,10 @@ export class CrudService {
         return observableThrowError(error);
     }
 
-    getHeaders(): HttpHeaders {
-        const headersConfig = {
-            'Content-Type': 'application/json', 
-            'Accept': 'application/json',
-            'Authorization': 'Bearer ' + this.store.getToken()
-        };
-        return new HttpHeaders(headersConfig);
-    }
-
     get<T>(uri: string): Observable<T> {
         return new Observable(
           observer => {
-            this.http.get<any>(environment.api_url + uri, {headers: this.getHeaders()})
+            this.http.get<any>(environment.api_url + uri)
               .subscribe((response: any) => {
                   observer.next(response.value ? response.value : response);
                 },
@@ -54,7 +48,7 @@ export class CrudService {
     post<T>(uri: string, body: Object = {}): Observable<T> {
         return new Observable(
           observer => {
-            this.http.post<any>(environment.api_url + uri, body, {headers: this.getHeaders()})
+            this.http.post<any>(environment.api_url + uri, body)
               .subscribe((response: any) => {
                   observer.next(response.value ? response.value : response);
                 },
